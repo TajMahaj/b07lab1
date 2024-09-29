@@ -1,21 +1,24 @@
+import java.io.File;
+import java.io.IOException;
+
 public class Driver {
-    public static void main(String[] args) {
-        Polynomial p = new Polynomial();
-        System.out.println(p.evaluate(3)); // Expected output: 0.0
+    public static void main(String[] args) throws IOException {
+        // Create polynomial 6 - 2x + 5x^3
+        double[] coeffs1 = {6, -2, 5};
+        int[] exps1 = {0, 1, 3};
+        Polynomial p1 = new Polynomial(coeffs1, exps1);
+        
+        // Create polynomial 3 + 4x^2
+        double[] coeffs2 = {3, 4};
+        int[] exps2 = {0, 2};
+        Polynomial p2 = new Polynomial(coeffs2, exps2);
 
-        double[] c1 = {6, 0, 0, 5}; // Polynomial 6 + 5x^3
-        Polynomial p1 = new Polynomial(c1);
+        // Multiply the two polynomials
+        Polynomial result = p1.multiply(p2);
+        System.out.println("Result of multiplication: " + result.evaluate(2)); // Test multiplication
 
-        double[] c2 = {0, -2, 0, 0, -9}; // Polynomial -2x - 9x^4
-        Polynomial p2 = new Polynomial(c2);
-
-        Polynomial s = p1.add(p2); // Adding polynomials
-        System.out.println("s(0.1) = " + s.evaluate(0.1)); // Expected output: 5.8041
-
-        if (s.hasRoot(1)) {
-            System.out.println("1 is a root of s");
-        } else {
-            System.out.println("1 is not a root of s"); // Expected output
-        }
+        // Test file-based constructor and saveToFile method
+        Polynomial fromFile = new Polynomial(new File("polynomial.txt"));
+        fromFile.saveToFile("output.txt");
     }
 }
